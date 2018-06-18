@@ -30,7 +30,7 @@ def apply_linear_regression_lms( thetas, test_dataset ):
 
     for i in range( len( test_dataset ) ):
         print( i, len( test_dataset ) )
-        d = np.insert(test_dataset[i], 0, 1)
+        d = test_dataset[i]
 
         result = int( h_theta( d, thetas ) )
         result = result % 9
@@ -111,6 +111,6 @@ def main():
     results = apply_linear_regression_lms( thetas, test_dataset )
 
     #export result
-    export_result( results, "result_m2.csv" )
+    export_result( results, "result_m.csv" )
 
 main()
