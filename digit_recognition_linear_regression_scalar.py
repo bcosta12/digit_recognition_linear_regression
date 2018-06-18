@@ -23,7 +23,7 @@ def train_linear_regression_lms(  label_train, data_train, thetas, alfa, toleran
 
                 #print(label_train[i], h_theta( d, thetas ), round ( label_train[i] - h_theta( d, thetas ),2 ) )
                 if( abs (round( label_train[i] - h_theta( d, thetas ), 2)) < tolerance  ) :
-                #    done = True
+                    #done = True
                     break
                 thetas[j] += ( alfa * ( round( label_train[i] - h_theta( d, thetas ), 2 ) ) * d[j] )
                 if old < h_theta( d, thetas ):
@@ -110,7 +110,7 @@ def get_thetas( length ):
 def main():
 
     thetas = get_thetas( 785 )
-    alfa = 0.01 ##alfa mais baixo
+    alfa = 0.01
     tolerance=0.4
 
 
@@ -126,6 +126,6 @@ def main():
     results = apply_linear_regression_lms( thetas, test_dataset )
 
     #export result
-    export_result( results, "result-0.001.csv" )
+    export_result( results, 'result_s-'+str(alfa)+'-'+str(tolerance)+'.csv' )
 
 main()
