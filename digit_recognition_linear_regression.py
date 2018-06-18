@@ -7,9 +7,13 @@ def train_linear_regression_lms(  label_train, data_train, thetas, alfa, toleran
     print("Init train_linear_regression_lms")
     #train, priors = extract_vocabulary_and_count_docs( label_train, data_train )
 
-    for k in range (10000):
+    min_error = len( data_train ) * tolerance * 784
+
+    for k in range (1000):
+        print( k, 1000 )
+        current_error = 0
         for i in range( len( data_train ) ):
-            print( i, len( data_train ) )
+
             d = np.insert(data_train[i], 0, 1)
             done = False
             old = 10000000
@@ -19,16 +23,20 @@ def train_linear_regression_lms(  label_train, data_train, thetas, alfa, toleran
 
                 #print(label_train[i], h_theta( d, thetas ), round ( label_train[i] - h_theta( d, thetas ),2 ) )
                 if( abs (round( label_train[i] - h_theta( d, thetas ), 2)) < tolerance  ) :
-                    done = True
+                #    done = True
                     break
                 thetas[j] += ( alfa * ( round( label_train[i] - h_theta( d, thetas ), 2 ) ) * d[j] )
                 if old < h_theta( d, thetas ):
-                    done = True
+                    #done = True
                     break
                 old = h_theta( d, thetas )
 
+            current_error += abs (round( label_train[i] - h_theta( d, thetas ), 2))
             if done:
                 break
+        if current_error <= min_error:
+            break
+
 
 
     print("Final train_linear_regression_lms")
@@ -99,15 +107,11 @@ def get_thetas( length ):
         thetas[i] = rd.random()
     return  thetas
 
-def binarization( data_train ):
-    print("binarization")
-    return ( data_train >= 128 ).astype( int )
-
 def main():
 
     thetas = get_thetas( 785 )
-    alfa = 0.00000000001 ##alfa mais baixo
-    tolerance=0.2
+    alfa = 0.01 ##alfa mais baixo
+    tolerance=0.4
 
 
     train_dataset = read_csv_as_matrix( 'train.csv' )
@@ -116,14 +120,12 @@ def main():
     label_train, data_train = get_label_and_data_from_train( train_dataset )
 
     #train
-    #data_train = binarization( data_train )
     thetas = train_linear_regression_lms( label_train, data_train, thetas, alfa, tolerance )
 
     #predict
-    #test_dataset = binarization( test_dataset )
     results = apply_linear_regression_lms( thetas, test_dataset )
 
     #export result
-    export_result( results, "result.csv" )
+    export_result( results, "result-0.001.csv" )
 
 main()
