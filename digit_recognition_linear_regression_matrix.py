@@ -10,7 +10,7 @@ def train_linear_regression_lms(  label_train, data_train, thetas ):
 
     #theta = inv(xT * x) * xT * y, split in 3 parts
     part_1 = np.matmul( data_train_transpose, data_train )
-    part_1 = (part_1 + 0.00001*np.random.rand(784, 784)).astype(float)
+    part_1 = (part_1 + 0.0000001*np.random.rand(784, 784)).astype(float)
     part_1_inv = np.linalg.inv( part_1 )
     part_2 = np.matmul( part_1_inv, data_train_transpose )
     part_3 = np.matmul( part_2, label_train )
@@ -19,9 +19,8 @@ def train_linear_regression_lms(  label_train, data_train, thetas ):
     return thetas
 
 def h_theta( a, b ):
-    np_a = np.array(a)
-    np_b = np.array(b)
-    matmul =  np.matmul(np_a, np_b)
+
+    matmul =  np.matmul(a, b)
     return  np.argmax( matmul )
 
 def apply_linear_regression_lms( thetas, test_dataset ):
@@ -33,10 +32,11 @@ def apply_linear_regression_lms( thetas, test_dataset ):
         d = test_dataset[i]
 
         result = int( h_theta( d, thetas ) )
-        result = result % 9
-
-        if result == 10:
+        print(result)
+        if result > 9:
             result = 9
+        if result < 0:
+            result = 0
         results[i] = [i+1, result]
     print("Final apply_linear_regression_lms")
     return results
