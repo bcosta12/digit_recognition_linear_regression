@@ -111,6 +111,6 @@ def main():
     results = apply_linear_regression_lms( thetas, test_dataset )
 
     #export result
-    export_result( results, "result_m.csv" )
+    export_result( results, "result_matrix.csv" )
 
 main()
