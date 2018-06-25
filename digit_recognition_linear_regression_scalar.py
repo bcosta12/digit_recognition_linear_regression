@@ -70,8 +70,7 @@ def main():
 
     thetas = get_thetas( 785 )
     alfa = 3e-08
-    tolerance= 1e-6
-
+    tolerance= 1e-5
 
     train_dataset = read_csv_as_matrix( 'train.csv' )
     test_dataset = read_csv_as_matrix( 'test.csv' )
@@ -85,6 +84,6 @@ def main():
     results = apply_linear_regression_lms( thetas, test_dataset )
 
     #export result
-    export_result( results, 'results_scalar-'+str(alfa)+'-'+str(tolerance)+'.csv' )
+    export_result( results, 'result_scalar-alfa_'+str(alfa)+'-tolerance_'+str(tolerance)+'.csv' )
 
 main()
